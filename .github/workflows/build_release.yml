@@ -52,7 +52,8 @@ jobs:
         run: |
           set -x
           pwd
-          ls -all
+          ls -allh
+          ls -allh .pio/build/esp32dev
           tree
 
       # TODO: Validate
@@ -61,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: .pio/build/esp32dev/firmware.bin
-          name: demo.pio
+          name: AirSense.bin
           compression-level: 0
           if-no-files-found: error
   
