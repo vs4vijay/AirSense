@@ -1,7 +1,9 @@
 # AirSense
 
+Firmware code for AirSense which uses ESP32 and BME688 Sensor to determine Air Quality Index.
 
-## Setup Development
+
+## Setup Development Environment
 
 ```bash
 
