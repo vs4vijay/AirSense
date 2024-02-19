@@ -45,8 +45,16 @@ jobs:
       - name: Install PlatformIO core
         run: pip install -U platformio
 
+      - name: Check code quality
+        run: pio check
+
       - name: Build Firmware
-        run: pio run
+        run: |
+          set -x
+          # pio run
+
+          pio ci --project-conf platformio.ini .
+
 
       - name: List all files
         if: always()
