@@ -35,4 +35,7 @@ python -m esptool write_flash -z 0 firmware.bin
 
 ```bash
 
+
+pio device list
+
 ```
