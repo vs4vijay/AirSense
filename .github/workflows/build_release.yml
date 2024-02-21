@@ -10,12 +10,14 @@ on:
       - "*"
     paths:
       - airsense_firmware/**
+      - platformio.ini
       - .github/workflows/build_release.yml
   pull_request:
     branches:
       - main
     paths:
       - airsense_firmware/**
+      - platformio.ini
       - .github/workflows/build_release.yml
 
 permissions:
@@ -24,9 +26,6 @@ permissions:
 jobs:
   lint_airsense_firmware:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: airsense_firmware
 
     steps:
       - uses: actions/checkout@v4
@@ -56,9 +55,6 @@ jobs:
   
   build_airsense_firmware:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: airsense_firmware
     needs: 
       - lint_airsense_firmware
 
@@ -104,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: .pio/build/esp32dev/firmware.bin
-          name: AirSense.bin
+          name: airsense_firmware.bin
           compression-level: 0
           if-no-files-found: error
 
