@@ -1,5 +1,5 @@
 ---
-name: Compile AirSense Firmware
+name: Build and Release AirSense Firmware
 
 on:
   workflow_dispatch:
