@@ -22,7 +22,7 @@ permissions:
   contents: write
 
 jobs:
-  build_airsense_firmware:
+  lint_airsense_firmware:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -51,9 +51,42 @@ jobs:
       - name: Build Firmware
         run: |
           set -x
-          # pio run
+          pio run
+          # pio ci --project-conf platformio.ini .
+  
+  build_airsense_firmware:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: AirSense
+    needs: 
+      - lint_airsense_firmware
 
-          pio ci --project-conf platformio.ini .
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Install PlatformIO core
+        run: pip install -U platformio
+
+      - name: Check code quality
+        run: pio check
+
+      - name: Build Firmware
+        run: |
+          set -x
+          pio run
+          # pio ci --project-conf platformio.ini .
 
 
       - name: List all files
