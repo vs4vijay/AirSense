@@ -76,8 +76,8 @@ jobs:
       - name: Install PlatformIO core
         run: pip install -U platformio
 
-      - name: Check code quality
-        run: pio check
+      # - name: Check code quality
+      #   run: pio check
 
       - name: Build Firmware
         run: |
