@@ -7,6 +7,7 @@
 #define BME688_I2C_ADDR 0x77
 
 Adafruit_BME680 bme;
+// Adafruit_BME680 bme(BME688_I2C_ADDR, Wire);
 
 void blink_led();
 float calculate_aqi(Adafruit_BME680 bme);
@@ -33,6 +34,7 @@ void setup()
     while (1)
       ;
   }
+  blink_led();
 }
 
 void loop()
@@ -40,6 +42,7 @@ void loop()
 
   // Calculate Air Quality Index (AQI) using a formula
   float aqi = calculate_aqi(bme);
+  blink_led();
   Serial.print("[+] Air Quality Index (AQI): ");
   Serial.println(aqi);
 
@@ -52,8 +55,9 @@ float calculate_aqi(Adafruit_BME680 bme)
   float temperature = bme.readTemperature();
   float humidity = bme.readHumidity();
   float pressure = bme.readPressure() / 100.0;
-  // float gasResistance = bme.readGasResistance() / 1000.0;
   float gas = bme.readGas() / 1000.0;
+  // TODO: Get Gas Resistance value from the sensor
+  // float gas_resistance = bme.readGasResistance() / 1000.0;
 
   Serial.print("Temperature: ");
   Serial.print(temperature);
@@ -77,6 +81,7 @@ float calculate_aqi(Adafruit_BME680 bme)
 
   // Example calculation:
   float aqi = temperature + humidity + pressure + gas;
+  // float aqi = temperature * humidity * pressure / gas;
 
   return aqi;
 }
