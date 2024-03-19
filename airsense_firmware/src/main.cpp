@@ -25,14 +25,14 @@ void setup()
   Serial.begin(115200);
   Wire.begin();
 
+  Serial.println("[+] AirSense is running...");
+
   if (!bme.begin(BME688_I2C_ADDR))
   {
-    Serial.println("Could not find a valid BME688 sensor, check wiring!");
+    Serial.println("[-] Could not find a valid BME688 sensor, check wiring!");
     while (1)
       ;
   }
-
-  Serial.println("[+] AirSense is running...");
 }
 
 void loop()
@@ -40,7 +40,7 @@ void loop()
 
   // Calculate Air Quality Index (AQI) using a formula
   float aqi = calculate_aqi(bme);
-  Serial.print("Air Quality Index (AQI): ");
+  Serial.print("[+] Air Quality Index (AQI): ");
   Serial.println(aqi);
 
   delay(2000);
@@ -53,6 +53,7 @@ float calculate_aqi(Adafruit_BME680 bme)
   float humidity = bme.readHumidity();
   float pressure = bme.readPressure() / 100.0;
   // float gasResistance = bme.readGasResistance() / 1000.0;
+  float gas = bme.readGas() / 1000.0;
 
   Serial.print("Temperature: ");
   Serial.print(temperature);
@@ -66,16 +67,16 @@ float calculate_aqi(Adafruit_BME680 bme)
   Serial.print(pressure);
   Serial.println(" hPa");
 
-  // Serial.print("Gas Resistance: ");
-  // Serial.print(gasResistance);
-  // Serial.println(" KOhms");
+  Serial.print("Gas: ");
+  Serial.print(gas);
+  Serial.println(" KOhms");
 
   // TODO: Implement AQI calculation based on sensor readings
   // You can use the provided sensor data to calculate the AQI
   // and return the calculated value
 
   // Example calculation:
-  float aqi = temperature + humidity + pressure;
+  float aqi = temperature + humidity + pressure + gas;
 
   return aqi;
 }
