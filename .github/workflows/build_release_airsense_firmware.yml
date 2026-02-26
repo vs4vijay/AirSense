@@ -98,7 +98,7 @@ jobs:
       # TODO: Validate
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: .pio/build/esp32dev/firmware.bin
           name: airsense_firmware.bin
@@ -126,7 +126,7 @@ jobs:
 
           echo "version=${version}" > $GITHUB_OUTPUT
 
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           merge-multiple: true
 
